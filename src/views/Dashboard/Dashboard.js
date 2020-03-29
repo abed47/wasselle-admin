@@ -24,7 +24,8 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 
 const Widget03 = lazy(() => import('../../views/Widgets/Widget03'));
-const Widget04 = lazy(() => import('../../views/Widgets/Widget04'))
+const Widget04 = lazy(() => import('../../views/Widgets/Widget04'));
+const Widget02 = lazy(() => import('../../views/Widgets/Widget02'));
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
 const brandInfo = getStyle('--info')
@@ -490,60 +491,37 @@ class Dashboard extends Component {
           </Col>
 
           <Col xs="12" sm="6" lg="3">
-            <Widget04 icon="icon-basket-loaded" color="success" header="1238" value="25">Products sold</Widget04>
+          <Widget04 icon="icon-people" color="info" header="87.500" value="25">Visitors</Widget04>
+          </Col>
+
+          <Col xs="12" sm="6" lg="3">
+          <Widget04 icon="icon-user-follow" color="success" header="385" value="25">New Clients</Widget04>
           </Col>
 
 
           <Col xs="12" sm="6" lg="3">
-            <Widget04 icon="icon-basket-loaded" color="success" header="1238" value="25">Products sold</Widget04>
-          </Col>
-
-
-          <Col xs="12" sm="6" lg="3">
-            <Widget04 icon="icon-basket-loaded" color="success" header="1238" value="25">Products sold</Widget04>
+            <Widget04 icon="icon-clock" color="warning" header="1238" value="25">Products sold</Widget04>
           </Col>
         </Row>
 
         <Row>
-          <Col xs="6" sm="6" lg="3">
-            <Suspense fallback={this.loading()}>
-              <Widget03 dataBox={() => ({ variant: 'facebook', friends: '89k', feeds: '459' })} >
-                <div className="chart-wrapper">
-                  <Line data={makeSocialBoxData(0)} options={socialChartOpts} height={90} />
-                </div>
-              </Widget03>
-            </Suspense>
+
+          <Col xs="12" sm="6" lg="3">
+            <Widget02 header="$1.999,50" mainText="Income" icon="fa fa-money" color="primary" />
           </Col>
 
-          <Col xs="6" sm="6" lg="3">
-            <Suspense fallback={this.loading()}>
-              <Widget03 dataBox={() => ({ variant: 'twitter', followers: '973k', tweets: '1.792' })} >
-                <div className="chart-wrapper">
-                  <Line data={makeSocialBoxData(1)} options={socialChartOpts} height={90} />
-                </div>
-              </Widget03>
-            </Suspense>
+          <Col xs="12" sm="6" lg="3">
+            <Widget02 header="$1.999,50" mainText="Income" icon="fa fa-money" color="primary" />
           </Col>
 
-          <Col xs="6" sm="6" lg="3">
-            <Suspense fallback={this.loading()}>
-              <Widget03 dataBox={() => ({ variant: 'linkedin', contacts: '500+', feeds: '292' })} >
-                <div className="chart-wrapper">
-                  <Line data={makeSocialBoxData(2)} options={socialChartOpts} height={90} />
-                </div>
-              </Widget03>
-            </Suspense>
+          <Col xs="12" sm="6" lg="3">
+            <Widget02 header="$1.999,50" mainText="Income" icon="fa fa-money" color="primary" />
           </Col>
 
-          <Col xs="6" sm="6" lg="3">
-            <Suspense fallback={this.loading()}>
-              <Widget03 dataBox={() => ({ variant: 'google-plus', followers: '894', circles: '92' })} >
-                <div className="chart-wrapper">
-                  <Line data={makeSocialBoxData(3)} options={socialChartOpts} height={90} />
-                </div>
-              </Widget03>
-            </Suspense>
+          <Col xs="12" sm="6" lg="3">
+            <Widget02 header="$1.999,50" mainText="Income" icon="fa fa-money" color="primary" />
           </Col>
+          
         </Row>
 
         <Row>
