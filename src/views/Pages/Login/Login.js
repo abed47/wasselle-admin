@@ -40,7 +40,6 @@ const Login = () =>  {
 
         let u = await res.docs[0].data();
         if(u.password !== password){
-          console.log(password,u.password)
           setMessage('Wrong password!')
           setShowMessage(true)
           return
@@ -53,8 +52,8 @@ const Login = () =>  {
   }
 
   useEffect(() => {
-    if(isLoggedIn,user){
-      history.push('/home')
+    if(isLoggedIn && user){
+      history.push('/#/dashboard')
     }
   },[user,isLoggedIn])
 
