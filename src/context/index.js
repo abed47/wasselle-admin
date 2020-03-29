@@ -1,10 +1,10 @@
 import React, { createContext, useState, useEffect } from "react";
 
-const Context = createContext();
+export const MainContext = createContext();
 
-export const MainContext = props => {
+export const Context = props => {
     const [isLoggedIn, setLoggedIn ] = useState(false)
-
+    const [user,setUser] = useState({})
     useEffect(() => {
         let u = localStorage.getItem('user');
         if(!u){
@@ -14,9 +14,12 @@ export const MainContext = props => {
 
 
     return(
-        <Context.Provider value={{user:[isLoggedIn,setLoggedIn]}}>
+        <MainContext.Provider value={
+            {
+                user:{isLoggedIn,setLoggedIn,user,setUser}
+            }}>
             {props.children}
-        </Context.Provider>
+        </MainContext.Provider>
     )
-    
+
 }

@@ -1,20 +1,25 @@
 import React,{useState, useEffect,useContext} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import {MainContext} from './../../../context';
 import { Button, Card, Alert, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import {fb} from './../../../firebase';
 import Joi from '@hapi/joi'
 const Login = () =>  {
+  const fs = fb.firestore()
   const [username,setUsername] = useState('');
   const [password,setPassword] = useState('');
   const [message,setMessage] = useState('');
   const [showMessage,setShowMessage] = useState(false);
+  const contextValues = useContext(MainContext);
+  const {isLoggedIn,setLoggedIn,user,setUser} = contextValues.user
+  const history = useHistory()
   const validationSchema = Joi.object({
-    username: Joi.string().alphanum().min(6).max(30),
+    username: Joi.string().alphanum().min(5).max(30),
     password: Joi.string().min(6).regex(/^[a-zA-Z0-9]{3,30}$/),
   })
 
   const validationRes = input => {return validationSchema.validate(input)};
-    const authincation = () => {
+    const authincation = async () => {
       let val = validationRes({username,password})
       setShowMessage(false)
       setMessage('')
@@ -24,8 +29,34 @@ const Login = () =>  {
         return
       }
 
-      
+      let ref = await fs.collection('users');
+
+      ref.where('username','==',username).get().then(async res => {
+        if(res.empty){
+          setMessage('user does not exist')
+          setShowMessage(true)
+          return
+        }
+
+        let u = await res.docs[0].data();
+        if(u.password !== password){
+          console.log(password,u.password)
+          setMessage('Wrong password!')
+          setShowMessage(true)
+          return
+        }
+
+        setUser(u)
+        setLoggedIn(true)
+      })
+
   }
+
+  useEffect(() => {
+    if(isLoggedIn,user){
+      history.push('/home')
+    }
+  },[user,isLoggedIn])
 
     return (
       <div className="app flex-row align-items-center">
