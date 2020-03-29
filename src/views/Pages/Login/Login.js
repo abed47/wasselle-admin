@@ -1,13 +1,38 @@
 import React,{useState, useEffect,useContext} from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, Card, Alert, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import {fb} from './../../../firebase';
+import Joi from '@hapi/joi'
 const Login = () =>  {
-  
+  const [username,setUsername] = useState('');
+  const [password,setPassword] = useState('');
+  const [message,setMessage] = useState('');
+  const [showMessage,setShowMessage] = useState(false);
+  const validationSchema = Joi.object({
+    username: Joi.string().alphanum().min(6).max(30),
+    password: Joi.string().min(6).regex(/^[a-zA-Z0-9]{3,30}$/),
+  })
+
+  const validationRes = input => {return validationSchema.validate(input)};
+    const authincation = () => {
+      let val = validationRes({username,password})
+      setShowMessage(false)
+      setMessage('')
+      if(val.error){
+        setMessage(val.error.message)
+        setShowMessage(true)
+        return
+      }
+
+      
+  }
 
     return (
       <div className="app flex-row align-items-center">
         <Container>
+        <Alert color="warning" isOpen={showMessage} toggle={() => setShowMessage(false)}>
+          {message}
+        </Alert>
           <Row className="justify-content-center">
             <Col md="8">
               <CardGroup>
@@ -21,7 +46,15 @@ const Login = () =>  {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" />
+                        <Input 
+                        type="text" 
+                        placeholder="Username" 
+                        autoComplete="username" 
+                        value={username} 
+                        onChange={e => {
+                          e.preventDefault()
+                          setUsername(e.target.value)
+                        }} />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -29,14 +62,24 @@ const Login = () =>  {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" />
+                        <Input 
+                        type="password" 
+                        placeholder="Password" 
+                        autoComplete="current-password"
+                        value={password}
+                        onChange={e => {
+                          e.preventDefault()
+                          setPassword(e.target.value)
+                        }} />
                       </InputGroup>
                       <Row>
                         <Col xs="6">
-                          <Button onClick={() => {alert('sdfj')}} color="primary" className="px-4">Login</Button>
+                          <Button onClick={() => authincation()} color="primary" className="px-4">Login</Button>
                         </Col>
                         <Col xs="6" className="text-right">
+                          <a href="https://wa.me/96176402094?text=m3alem nset el password">
                           <Button color="link" className="px-0">Forgot password?</Button>
+                          </a>
                         </Col>
                       </Row>
                   </CardBody>
