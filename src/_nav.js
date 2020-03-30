@@ -6,6 +6,11 @@ export default {
       icon: 'icon-speedometer',
     },
     {
+      name: 'Orders',
+      url: '/orders',
+      icon: 'icon-basket-loaded'
+    },
+    {
       title: true,
       name: 'Theme',
       wrapper: {            // optional wrapper object
