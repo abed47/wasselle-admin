@@ -33,10 +33,10 @@ class Orders extends Component{
             pageCount: 0,
             canelModalShow: false,
             doneModalShow: false,
-            viewOrderModalShow: true,
+            viewOrderModalShow: false,
             showLoading:false,
             selectedOrderId: '',
-            selectedCartData: {}
+            selectedCartData: []
         }
     }
 
@@ -121,10 +121,6 @@ class Orders extends Component{
         
     }
 
-    async showCartItem(cart){
-        console.log(cart)
-    }
-
     PaginationItems(count){
         let pageinationLinks = []
         for(let i = 0; i < count; ++i){
@@ -188,13 +184,18 @@ class Orders extends Component{
         this.toggleCancelModal()
     }
 
-    handleOrderView(id){
+    handleOrderView(data){
+        this.setState({
+            selectedCartData:JSON.parse(data)
+        },() => {
+            this.toggleOrderViewModal()
+        })
 
     }
 
     toggleOrderViewModal(){
         this.setState({
-            viewOrderModalShow : !this.state.viewOrderModalShow
+            viewOrderModalShow : !this.state.viewOrderModalShow,
         })
     }
 
@@ -264,13 +265,34 @@ class Orders extends Component{
                 </Modal>
 
                 <Modal isOpen={this.state.doneModalShow} >
-                    <ModalHeader toggle={() => this.toggleDeliverModal()}>Modal title</ModalHeader>
+                    <ModalHeader toggle={() => this.toggleDeliverModal()}>Deliver Order</ModalHeader>
                     <ModalBody>
                         Are you sure you delivered this order?
                     </ModalBody>
                     <ModalFooter>
                     <Button color="success" onClick={() => this.deliverOrder(this.state.selectedOrderId)}>Yes</Button>{' '}
                     <Button color="secondary" onClick={() => this.toggleDeliverModal()}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+
+                <Modal isOpen={this.state.viewOrderModalShow} >
+                    <ModalHeader toggle={() => this.toggleOrderViewModal()}>Order</ModalHeader>
+                    <ModalBody>
+                    <ul className="list-group">
+                        { this.state.selectedCartData !== null? 
+                        this.state.selectedCartData.map(item => {
+                            return <li key={item.itemId} className="list-group-item d-flex justify-content-between ">
+                                <span> {item.name} </span>
+                                <span> {item.orderedQuantity} / {item.unitMeasure}</span>
+                                <span> {item.unitPrice * item.orderedQuantity} </span>
+                            </li>
+                        })
+                        : null}
+
+                    </ul>
+                    </ModalBody>
+                    <ModalFooter>
+                    <Button color="secondary" onClick={() => this.toggleOrderViewModal()}>Close</Button>
                     </ModalFooter>
                 </Modal>
 
@@ -306,7 +328,7 @@ class Orders extends Component{
                                         <tr key={item.id}>
                                         <td>{!item.user ? '' : item.user.phoneNumber}</td>
                                         <td>{this.toDateTime(item.date)} <i className="fa fa-clock-o text-warning"></i> </td>
-                                        <td><Button onClick={() => this.showCartItem(item.cart)} color="primary" className="p-1" ><i className="icon-eye icons m-0"></i></Button></td>
+                                        <td><Button onClick={() => this.handleOrderView(item.cart)} color="primary" className="p-1" ><i className="icon-eye icons m-0"></i></Button></td>
                                         <td>
                                             {
                                                 item.status === 'done' ?
@@ -320,8 +342,8 @@ class Orders extends Component{
                                         </td>
                                         <td>
                                             <ButtonGroup size="sm">
-                                                <Button onClick={() => this.handleOrderCancel(item.id)}><i className="cui-ban icons font-2 d-block text-danger"></i></Button>
-                                                <Button onClick={() => this.handleOrderDone(item.id)}><i className="cui-circle-check icon font-2 d-block text-success>"></i></Button>
+                                                <Button disabled={item.status === 'cancel' || item.status === 'done' ? true : false} onClick={() => this.handleOrderCancel(item.id)}><i className="cui-ban icons font-2 d-block text-danger"></i></Button>
+                                                <Button disabled={item.status === 'done' || item.status === 'cancel' ? true : false} onClick={() => this.handleOrderDone(item.id)}><i className="cui-circle-check icon font-2 d-block text-success>"></i></Button>
                                             </ButtonGroup>
                                         </td>
                                         </tr>
