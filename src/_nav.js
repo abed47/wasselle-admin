@@ -11,6 +11,11 @@ export default {
       icon: 'icon-basket-loaded'
     },
     {
+      name: 'Items',
+      url: '/items',
+      icon: 'icon fa fa-file-image-o'
+    },
+    {
       title: true,
       name: 'Theme',
       wrapper: {            // optional wrapper object
