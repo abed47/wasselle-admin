@@ -4,10 +4,21 @@ export default {
       name: 'Dashboard',
       url: '/dashboard',
       icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'NEW',
-      },
+    },
+    {
+      name: 'Orders',
+      url: '/orders',
+      icon: 'icon-basket-loaded'
+    },
+    {
+      name: 'Items',
+      url: '/items',
+      icon: 'icon fa fa-file-image-o'
+    },
+    {
+      name: 'Categories',
+      url: '/categories',
+      icon: 'cui-calculator icons'
     },
     {
       title: true,
