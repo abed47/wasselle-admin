@@ -16,6 +16,11 @@ export default {
       icon: 'icon fa fa-file-image-o'
     },
     {
+      name: 'Categories',
+      url: '/categories',
+      icon: 'cui-calculator icons'
+    },
+    {
       title: true,
       name: 'Theme',
       wrapper: {            // optional wrapper object
