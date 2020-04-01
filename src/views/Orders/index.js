@@ -305,7 +305,7 @@ class Orders extends Component{
                 </div>
 
                 <Row>
-                    <Col xs="12" sm="12" md="10" lg="10" offset="1">
+                    <Col xs="12" lg={{size: 10, offset: 1}} offset="1">
                         <Card>
                         <CardHeader>
                             <i className="fa fa-shopping-basket"></i> Orders
