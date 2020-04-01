@@ -181,6 +181,7 @@ class Items extends Component{
             }
             canvas.width = width;
             canvas.height = height;
+            ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
             var dataurl = canvas.toDataURL("image/png");
             this.setState({previewSrc: dataurl});
