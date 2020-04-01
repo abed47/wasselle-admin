@@ -12,13 +12,12 @@ import {
   Table,
 } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
+import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities'
 import {fb} from '../../firebase'
 const Widget04 = lazy(() => import('../../views/Widgets/Widget04'));
 const Widget02 = lazy(() => import('../../views/Widgets/Widget02'));
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
-const brandInfo = getStyle('--info')
 const brandWarning = getStyle('--warning')
 const brandDanger = getStyle('--danger')
 const fs = fb.firestore()
