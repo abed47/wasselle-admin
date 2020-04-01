@@ -1,6 +1,6 @@
 import React,{useState, useEffect,useContext} from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import {MainContext} from './../../../context';
+import {MainContext,Context} from './../../../context';
 import { Button, Card, Alert, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import {fb} from './../../../firebase';
 import Joi from '@hapi/joi'
@@ -45,6 +45,7 @@ const Login = () =>  {
           return
         }
 
+        localStorage.setItem('user',JSON.stringify(u))
         setUser(u)
         setLoggedIn(true)
       })
@@ -53,7 +54,7 @@ const Login = () =>  {
 
   useEffect(() => {
     if(isLoggedIn && user){
-      history.push('/#/dashboard')
+      history.push('/dashboard')
     }
   },[user,isLoggedIn])
 

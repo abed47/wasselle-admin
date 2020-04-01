@@ -2,7 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
-
+import {MainContext} from '../../context'
 import {
   AppAside,
   AppFooter,
@@ -26,8 +26,20 @@ const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
 
-  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  constructor(props){
+    super(props)
+    this.state ={
+      user : {}
+    }
+  }
+  componentWillMount(){
+    this.setState({
+      user : this.context.user
+    })
+  }
 
+  loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
+  
   signOut(e) {
     e.preventDefault()
     this.props.history.push('/login')
@@ -56,7 +68,10 @@ class DefaultLayout extends Component {
             <Container fluid>
               <Suspense fallback={this.loading()}>
                 <Switch>
-                  {routes.map((route, idx) => {
+                  
+                  {
+                    this.state.user.isLoggedIn ?
+                  routes.map((route, idx) => {
                     return route.component ? (
                       <Route
                         key={idx}
@@ -67,7 +82,9 @@ class DefaultLayout extends Component {
                           <route.component {...props} />
                         )} />
                     ) : (null);
-                  })}
+                  }) :
+                  <Redirect to="/login"></Redirect>
+                }
                   <Redirect from="/" to="/dashboard" />
                 </Switch>
               </Suspense>
@@ -88,5 +105,5 @@ class DefaultLayout extends Component {
     );
   }
 }
-
+DefaultLayout.contextType = MainContext;
 export default DefaultLayout;

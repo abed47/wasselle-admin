@@ -21,6 +21,12 @@ export default {
       icon: 'cui-calculator icons'
     },
     {
+      name: 'Logout',
+      url:'/Logout',
+      icon:'fa fa-sign-out'
+    }
+    /*
+    {
       title: true,
       name: 'Theme',
       wrapper: {            // optional wrapper object
@@ -287,5 +293,6 @@ export default {
       variant: 'danger',
       attributes: { target: '_blank', rel: "noopener" },
     },
+    */
   ],
 };

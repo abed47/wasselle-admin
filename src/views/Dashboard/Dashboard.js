@@ -14,6 +14,7 @@ import {
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle } from '@coreui/coreui/dist/js/coreui-utilities'
 import {fb} from '../../firebase'
+import { MainContext } from '../../context';
 const Widget04 = lazy(() => import('../../views/Widgets/Widget04'));
 const Widget02 = lazy(() => import('../../views/Widgets/Widget02'));
 const brandPrimary = getStyle('--primary')
@@ -140,9 +141,6 @@ class Dashboard extends Component {
       achievedTasks:0,
       undoneTasks:0
     };
-  }
-
-  componentWillUnmount() {
   }
 
   componentDidMount(){
@@ -728,5 +726,7 @@ class Dashboard extends Component {
     );
   }
 }
+
+Dashboard.contextType = MainContext;
 
 export default Dashboard;
